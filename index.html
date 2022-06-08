@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Use yyyymmdd date format everywhere</title>
     <!-- TODO: favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico">
     <style>
+
+pre {
+    white-space: pre-wrap;
+}
 
 pre, .detail {
     font-family: "Courier New", monospace;
@@ -15,7 +19,6 @@ pre, .detail {
     padding-right: 1em;
     padding-top: 0.4em;
     padding-bottom: 0.4em;
-    white-space: pre-wrap;
     background-color: lightgrey;
 }
 
@@ -70,7 +73,11 @@ git config --global log.date format:'%Y-%m-%d %H:%M:%S'
 </pre>
 
 <h2>Web browsing</h2>
-<div class="detail">TODO: Install this userscript</div>
+<div class="detail">
+Install this userscript: <a href="yyyymmdd.user.js">yyyymmdd.user.js</a>.
+<br>
+You need install a brower extension like Tampermonkey or Greasemonkey first.
+</div>
 
 <h1>Timestamp to yyyymmdd in programming languages</h1>
 (Use unix timestamp 1300000000 as examples)
