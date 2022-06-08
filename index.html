@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Use yyyymmdd date format everywhere</title>
+    <!-- TODO: favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <style>
+
+pre, .detail {
+    font-family: "Courier New", monospace;
+    box-shadow: -1px 1px 4px 0px black;
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: 0.4em;
+    padding-bottom: 0.4em;
+    white-space: pre-wrap;
+    background-color: lightgrey;
+}
+
+html {
+    background-color: lightyellow;
+    font-family: monospace;
+    max-width: 800px;
+    padding-left: 2em;
+    padding-top: 1em;
+    padding-bottom: 4em;
+}
+
+h1 {
+    margin-top: 1.2em;
+}
+
+h2 {
+    margin-bottom: 0;
+}
+
+.detail {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.header {
+    padding: 1em;
+    background-color: darkred;
+    color: white;
+    box-shadow: -1px 1px 4px 0px black;
+}
+
+    </style>
+</head>
+<body>
+
+<div class="header">
+    There are too many confusing date formats. Let's just use yyyymmdd instead.
+</div>
+
+<h1>Configure softwares</h1>
+
+<h2>bash</h2>
+<pre>
+alias date='date +%Y-%m-%d %H:%M:%S.%3N'
+alias ls='ls --time-style=+%Y-%m-%d %H:%M:%S'
+</pre>
+
+<h2>git</h2>
+<pre>
+git config --global log.date format:'%Y-%m-%d %H:%M:%S'
+</pre>
+
+<h2>Web browsing</h2>
+<div class="detail">TODO: Install this userscript</div>
+
+<h1>Timestamp to yyyymmdd in programming languages</h1>
+(Use unix timestamp 1300000000 as examples)
+
+<h2>command line (local)</h2>
+<pre>
+date -d@1300000000 '+%Y-%m-%d %H:%M:%S.%3N'
+# 2011-03-13 07:06:40.000
+</pre>
+
+<h2>python (local)</h2>
+<pre>
+import datetime
+dt = datetime.datetime.fromtimestamp(1300000000)
+dt.strftime('%Y-%m-%d %H:%M:%S')
+# 2011-03-13 15:06:40
+</pre>
+
+<h2>JS (local)</h2>
+<pre>
+var dt = new Date(1300000000 * 1000);
+console.log(dt.toLocaleDateString('lt') + ' ' + dt.toLocaleTimeString('lt'));
+// 2011-03-13 15:06:40
+</pre>
+
+<h2>JS (GMT, ISO)</h2>
+<pre>
+new Date(1300000000 * 1000).toISOString()
+// 2011-03-13T07:06:40.000Z
+</pre>
+
+<h2>C (local & GMT)</h2>
+<pre>
+time_t ts = 1300000000;
+struct tm stm;
+localtime_r(&ts, &stm);     // local
+// gmttime_r(&ts, &stm);    // GMT
+char buf[sizeof("yyyy-mm-dd HH:MM:SS")];
+strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", &stm);
+// 2011-03-13 15:06:40
+</pre>
+
+<h2>golang (local, with timezone)</h2>
+<pre>
+// This is the most awful one. I bet you have to lookup this every time.
+time.Unix(1300000000, 0).Format("2006-01-02 15:04:05.000-0700")
+// 2011-03-13 15:06:40.000+0800
+</pre>
+
+</body>
+</html>
